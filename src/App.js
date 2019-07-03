@@ -1,54 +1,48 @@
 import React from 'react'
 import { Menu, Icon } from 'antd';
+import {BrowserRouter as Router, Route} from 'react-router-dom'
+import './App.css'
+import moduleRoutes from './module/routes'
 
-const { SubMenu } = Menu;
 
-export default class App extends React.Component {
+class AppContainer extends React.Component {
   state = {
-    current: 'mail',
+    current: 'login',
   };
 
-  handleClick = e => {
-    console.log('click ', e);
-    this.setState({
-      current: e.key,
-    });
-  };
-
-  render() {
+  renderMenu() {
     return (
       <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
-        <Menu.Item key="mail">
-          <Icon type="mail" />
-          Navigation One
-        </Menu.Item>
-        <Menu.Item key="app" disabled>
-          <Icon type="appstore" />
-          Navigation Two
-        </Menu.Item>
-        <SubMenu
-          title={
-            <span className="submenu-title-wrapper">
-              <Icon type="setting" />
-              Navigation Three - Submenu
-            </span>
-          }
-        >
-          <Menu.ItemGroup title="Item 1">
-            <Menu.Item key="setting:1">Option 1</Menu.Item>
-            <Menu.Item key="setting:2">Option 2</Menu.Item>
-          </Menu.ItemGroup>
-          <Menu.ItemGroup title="Item 2">
-            <Menu.Item key="setting:3">Option 3</Menu.Item>
-            <Menu.Item key="setting:4">Option 4</Menu.Item>
-          </Menu.ItemGroup>
-        </SubMenu>
-        <Menu.Item key="alipay">
-          <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-            Navigation Four - Link
-          </a>
+        <Menu.Item key="login">
+          <Icon type="login" />
+          登陆服务
         </Menu.Item>
       </Menu>
     );
   }
+
+  render() {
+    return (
+      <div>
+        {this.renderMenu()}
+        <div className="app-content-wrapper">
+          {this.props.children}
+        </div>
+      </div>
+    )
+  }
+}
+
+export default function App() {
+  return (
+    <AppContainer>
+      <Router>
+        {
+          moduleRoutes.map(route => {
+            return <Route path={route.path} component={route.component}></Route>
+          })
+        }
+      </Router>
+    </AppContainer>
+  )
 }
