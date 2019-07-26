@@ -10,12 +10,13 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      webviewTag: true
     }
   })
 
   // 加载index.html文件
-  win.loadURL('http://localhost:3000/login-server')
+  win.loadURL('http://localhost:3000/')
 
   // 打开开发者工具
   win.webContents.openDevTools()

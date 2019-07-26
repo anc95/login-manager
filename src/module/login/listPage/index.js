@@ -1,4 +1,5 @@
 import React from 'react'
+import {observer} from 'mobx-react'
 import {
   Button,
   Input,
@@ -6,33 +7,29 @@ import {
   Row,
   Col
 } from 'antd'
+import State from './state'
 import {LOGIN_SERVER_LOGIN_WEBVIEW_PAGE} from '../constant'
-import {jump} from 'utils'
-const { remote } = window.require('electron')
+import {jump} from '../../../utils'
+// const { remote } = window.require('electron')
 
-
+@observer
 export default class extends React.Component {
-  handleClickLogin = () => {
-    // const win = new BrowserWindow()
-    // win.loadURL('http://www.baidu.com')
-    // win.webContents.openDevTools()
-
-    // setInterval(() => {
-    //   console.log(1111)
-    //   win.webContents.session.cookies.get({url: 'http://www.baidu.com'}, (err, cookie) => {
-    //     console.log(cookie)
-    //   })
-    // }, 1000)
-    // location.href =
-    jump(LOGIN_SERVER_LOGIN_WEBVIEW_PAGE)
+  constructor(props) {
+    super(props)
+    this.localState = new State(props)
   }
 
   renderLoginZone() {
+    const localState = this.localState
+
     return (
       <div className="login-zone-wrapper">
         <Row>
           <Col span={8}>
-            <Input />
+            <Input
+              value={localState.urlValue}
+              onChange={localState.handleClickLogin}
+            />
           </Col>
           <Col span={4} offset={1}>
             <Button onClick={this.handleClickLogin}>

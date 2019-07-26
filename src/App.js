@@ -1,21 +1,26 @@
 import React from 'react'
 import { Menu, Icon } from 'antd';
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import {Route, Link, Redirect} from 'react-router-dom'
+import {base, default as LoginLayout} from './container/loginServer'
 import './App.css'
-import moduleRoutes from './module/routes'
 
 
-class AppContainer extends React.Component {
+export default class App extends React.Component {
   state = {
     current: 'login',
   };
+
+  handleClick = e => {
+    this.setState({current: e.key})
+  }
 
   renderMenu() {
     return (
       <Menu onClick={this.handleClick} selectedKeys={[this.state.current]} mode="horizontal">
         <Menu.Item key="login">
-          <Icon type="login" />
-          登陆服务
+          <Link to={base}>
+            <Icon type="login" /> 登陆服务
+          </Link>
         </Menu.Item>
       </Menu>
     );
@@ -25,24 +30,11 @@ class AppContainer extends React.Component {
     return (
       <div>
         {this.renderMenu()}
-        <div className="app-content-wrapper">
-          {this.props.children}
+        <div className='app-content-wrapper'>
+          <Route path={base} component={LoginLayout} />
+          <Redirect to={base} />
         </div>
       </div>
     )
   }
-}
-
-export default function App() {
-  return (
-    <AppContainer>
-      <Router>
-        {
-          moduleRoutes.map(route => {
-            return <Route path={route.path} component={route.component}></Route>
-          })
-        }
-      </Router>
-    </AppContainer>
-  )
 }

@@ -360,6 +360,13 @@ module.exports = function(webpackEnv) {
                       "libraryName": "antd",
                       "style": true,   // or 'css'
                     }
+                  ],
+                  [
+                    require.resolve('@babel/plugin-proposal-decorators'),
+                    {
+                      "legacy:": true,
+                      "decoratorsBeforeExport": false
+                    }
                   ]
                 ],
                 // This is a feature of `babel-loader` for webpack (not Babel itself).

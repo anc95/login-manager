@@ -7,6 +7,7 @@ function queryToString(query) {
 }
 
 export function jump(path, query) {
+  console.log(path + queryToString(query))
   window.location.href = path + queryToString(query)
 }
 
