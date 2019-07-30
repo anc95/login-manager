@@ -1,7 +1,7 @@
 import {createStore, combineReducers} from 'redux'
 
 function getReducers() {
-  const r = require.context('../container', true, /reducer\.js$/)
+  const r = require.context('../container', true, /reducer(\.js)?$/)
 
   return r.keys().reduce(
     (reducers, key) => ({
@@ -11,7 +11,5 @@ function getReducers() {
     {}
   )
 }
-
-console.log(getReducers())
 
 export default createStore(combineReducers(getReducers()))

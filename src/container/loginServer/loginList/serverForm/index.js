@@ -1,9 +1,14 @@
+import { reduxForm } from 'redux-form'
 import View from './view'
 import validate from './validate'
-import { reduxForm } from 'redux-form'
+import {
+  baseStoreName,
+  formStoreName,
+  serverFormStoreName
+} from '../constant'
 
 export default reduxForm({
-  form: 'loginServerForm',
-  getFormState: store => store.loginServer.serverForm,
+  form: serverFormStoreName,
+  getFormState: store => store[baseStoreName][formStoreName],
   validate
 })(View)

@@ -1,11 +1,7 @@
 import React from 'react'
-import {Field} from 'redux-form'
 import {
-  Input,
   Form,
-  Button,
-  Row,
-  Col
+  Button
 } from 'antd'
 import {RFInput} from 'utils'
 

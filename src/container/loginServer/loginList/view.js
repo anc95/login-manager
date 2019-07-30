@@ -1,24 +1,29 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
 import ServerForm from './serverForm'
-import {jump} from 'utils'
+import SimulatedLoginModal from './simulatedLoginModal'
 // const { remote } = window.require('electron')
 
-const handleSubmit = (props, loginUrl) => {
+const handleSubmit = (props, url) => {
   const {
-    match: {
-      url
-    },
-    history
+    changeLoginUrl,
+    showModal
   } = props
 
-  history.push(`${url}/${encodeURIComponent(loginUrl)}`)
+  changeLoginUrl(url)
+  showModal()
 }
 
 const ServerList = props => {
+  const {
+    simulatedLoginModalVisible,
+    loginUrl
+  } = props
+
   return (
     <div className="login-server-list-wrapper">
-      <ServerForm onSubmit={value => handleSubmit(props, value.loginUrl)} />
+      <ServerForm onSubmit={form => handleSubmit(props, form.loginUrl)} />
+      <SimulatedLoginModal loginUrl={loginUrl} visible={simulatedLoginModalVisible} />
     </div>
   )
 }

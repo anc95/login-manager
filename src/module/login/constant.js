@@ -1,1 +1,0 @@
-export const LOGIN_SERVER_HOME_PAGE = '/login-server'
