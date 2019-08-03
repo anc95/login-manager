@@ -1,4 +1,5 @@
 export const baseStoreName = 'loginServer'
 export const formStoreName = 'formStore'
 export const serverFormStoreName = 'serverFormStore'
+export const taskNameFormStoreName = 'taskNameFormStoreName'
 export const simulatedLoginModalStoreName = 'simulatedLoginModalStore'

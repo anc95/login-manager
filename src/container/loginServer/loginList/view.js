@@ -23,7 +23,7 @@ const ServerList = props => {
   return (
     <div className="login-server-list-wrapper">
       <ServerForm onSubmit={form => handleSubmit(props, form.loginUrl)} />
-      <SimulatedLoginModal loginUrl={loginUrl} visible={simulatedLoginModalVisible} />
+      <SimulatedLoginModal onSubmit={() => {}} loginUrl={loginUrl} visible={simulatedLoginModalVisible} />
     </div>
   )
 }

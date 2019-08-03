@@ -5,7 +5,8 @@ import {
 } from 'antd'
 import {TaskStream} from 'utils/TaskStream'
 import {addTask} from 'utils/loginTask'
-import {RFInput} from 'utils'
+import TaskNameForm from './TaskNameForm'
+
 
 export default class extends React.Component {
   static propTypes = {
@@ -29,10 +30,29 @@ export default class extends React.Component {
     }
   }
 
-  handleOk = () => {
-    const {loginSuccess} = this.props
-
+  handleTaskFormSubmit = () => {
+    const {
+      hideModal,
+      loginUrl,
+      taskName
+    } = this.props
+    this.taskStream.name = taskName
+    this.taskStream.url = loginUrl
     addTask(this.taskStream)
+    hideModal()
+  }
+
+  handleOk = () => {
+    const {
+      loginSuccess,
+      status
+    } = this.props
+
+    if (status === 'success') {
+      this.triggerSubmit()
+      return
+    }
+
     loginSuccess()
   }
 
@@ -43,7 +63,11 @@ export default class extends React.Component {
         title="录取页面操作动作指令成功"
         subTitle="请给该操作起一个方便记住的名字吧"
         extra={[
-          // <RFInput />
+          <TaskNameForm
+            onSubmit={this.handleTaskFormSubmit}
+            submitFunction={f => this.triggerSubmit = f}
+            key="taskName"
+          />
         ]}
       />
     )

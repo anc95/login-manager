@@ -24,8 +24,10 @@ class Task {
 }
 
 export class TaskStream {
-  constructor() {
+  constructor(url) {
     this.taskQueue = []
+    this.name = ''
+    this.url = url
   }
 
   getEventConstuctorByName(name) {

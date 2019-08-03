@@ -4,13 +4,18 @@ import {
   toggleSimulatedLoginModalVisible,
   loginSuccess
 } from '../action'
-import {getSimulatedLoginModalStore} from '../getStore'
-
+import {
+  getSimulatedLoginModalStore,
+  getTaskNameFormStore
+} from '../getStore'
 
 const mapStateToStatus = store => {
   const {status} = getSimulatedLoginModalStore(store)
+  const {taskName} = getTaskNameFormStore(store)
+
   return {
-    status
+    status,
+    taskName
   }
 }
 
