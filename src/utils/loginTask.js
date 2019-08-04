@@ -41,7 +41,6 @@ ensureDir(appDataPath)
 ensureFile(loginTaskPath)
 
 export function getLoginTaskList() {
-  console.log(fs.readFileSync(loginTaskPath, {encoding: 'utf8'}))
   return JSON.parse(fs.readFileSync(loginTaskPath, {encoding: 'utf8'}) || '[]')
 }
 
@@ -67,6 +66,7 @@ function saveTask(task) {
 export function addTask(taskInfo) {
   taskInfo.id = uuidv4()
   saveLoginTaskList(getLoginTaskList().concat([taskInfo]))
+  return taskInfo
 }
 
 export function modifyTask(id, newTaskInfo) {
@@ -75,5 +75,14 @@ export function modifyTask(id, newTaskInfo) {
     ...newTaskInfo,
     id
   })
+}
+
+export function deleteTask(id) {
+  const taskToDelete = getTaskById(id)
+  let list = getLoginTaskList()
+  list = list.filter(task => task.id !== id)
+  saveLoginTaskList(list)
+
+  return taskToDelete
 }
 

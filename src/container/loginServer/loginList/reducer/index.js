@@ -1,15 +1,18 @@
 import { reducer as reduxFormReducer } from 'redux-form';
 import {combineReducers} from 'redux'
 import simulatedLoginModalReducer from './simulatedLoginModalReducer'
+import taskListReducer from './taskListReducer'
 import {
   baseStoreName,
   formStoreName,
-  simulatedLoginModalStoreName
+  simulatedLoginModalStoreName,
+  taskListStoreName
 } from '../constant'
 
 export default {
   [baseStoreName]: combineReducers({
     [formStoreName]: reduxFormReducer,
-    [simulatedLoginModalStoreName]: simulatedLoginModalReducer
+    [simulatedLoginModalStoreName]: simulatedLoginModalReducer,
+    [taskListStoreName]: taskListReducer
   })
 }

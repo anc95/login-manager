@@ -4,7 +4,6 @@ import {
   Modal, Result
 } from 'antd'
 import {TaskStream} from 'utils/TaskStream'
-import {addTask} from 'utils/loginTask'
 import TaskNameForm from './TaskNameForm'
 
 
@@ -34,7 +33,8 @@ export default class extends React.Component {
     const {
       hideModal,
       loginUrl,
-      taskName
+      taskName,
+      addTask
     } = this.props
     this.taskStream.name = taskName
     this.taskStream.url = loginUrl

@@ -2,7 +2,8 @@ import {connect} from 'react-redux'
 import View from './view'
 import {
   toggleSimulatedLoginModalVisible,
-  loginSuccess
+  loginSuccess,
+  addTask
 } from '../action'
 import {
   getSimulatedLoginModalStore,
@@ -22,7 +23,8 @@ const mapStateToStatus = store => {
 const mapDispatchToProps = dispatch => ({
   hideModal: () => dispatch(toggleSimulatedLoginModalVisible(false)),
   showModal: () => dispatch(toggleSimulatedLoginModalVisible(true)),
-  loginSuccess: () => dispatch(loginSuccess())
-})
+  loginSuccess: () => dispatch(loginSuccess()),
+  addTask: (taskInfo) => dispatch(addTask(taskInfo))
+ })
 
 export default connect(mapStateToStatus, mapDispatchToProps)(View)
