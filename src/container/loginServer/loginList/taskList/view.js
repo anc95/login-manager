@@ -8,6 +8,8 @@ import {
   Popconfirm,
   Drawer
 } from 'antd'
+import TaskLine from 'components/TaskLine'
+import {taskInfoToTaskLineAdaptor} from '../utils'
 import './style.scss'
 
 const Meta = Card.Meta
@@ -16,6 +18,10 @@ export default class TaskList extends React.Component {
   renderEditDrawer() {
     const {inEditMode, editTaskInfo, cancelEditTask} = this.props
 
+    if (!inEditMode) {
+      return null
+    }
+
     return (
       <Drawer
         title="Create a new account"
@@ -23,7 +29,7 @@ export default class TaskList extends React.Component {
         onClose={cancelEditTask}
         visible={inEditMode}
       >
-        {JSON.stringify(editTaskInfo)}
+        <TaskLine tasks={taskInfoToTaskLineAdaptor(editTaskInfo)} />
       </Drawer>
     )
   }
