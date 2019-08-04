@@ -1,13 +1,20 @@
 import {
   getLoginTaskList,
   deleteTask,
-  addTask
+  addTask,
 } from 'utils/loginTask'
 import {message} from 'antd'
-import {DELETE_TASK, ADD_TASK} from '../action'
+import {
+  DELETE_TASK,
+  ADD_TASK,
+  EDIT_TASK,
+  CANCEL_EDIT_TASK
+} from '../action'
 
 const initialState = {
-  taskList: getLoginTaskList()
+  taskList: getLoginTaskList(),
+  inEditMode: false,
+  editTaskInfo: null
 }
 
 export default function(state = initialState, {type, payload}) {
@@ -27,6 +34,23 @@ export default function(state = initialState, {type, payload}) {
       return {
         ...initialState,
         taskList: getLoginTaskList()
+      }
+    }
+
+    case EDIT_TASK: {
+      return {
+        ...initialState,
+        inEditMode: true,
+        editTaskInfo: payload
+      }
+    }
+
+    // 取消编辑
+    case CANCEL_EDIT_TASK: {
+      return {
+        ...initialState,
+        inEditMode: false,
+        editTaskInfo: null
       }
     }
   }

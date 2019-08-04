@@ -1,19 +1,31 @@
 import {connect} from 'react-redux'
 import View from './view'
 import {getTaskListStore} from '../getStore'
-import {deleteTaskById} from '../action'
+import {
+  deleteTaskById,
+  editTask,
+  cancelEditTask
+} from '../action'
 
 const mapStateToProps = store => {
-  const {taskList} = getTaskListStore(store)
+  const {
+    taskList,
+    inEditMode,
+    editTaskInfo
+  } = getTaskListStore(store)
 
   return {
-    taskList
+    taskList,
+    inEditMode,
+    editTaskInfo
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    deleteTask: id => dispatch(deleteTaskById(id))
+    editTask: taskInfo => dispatch(editTask(taskInfo)),
+    deleteTask: id => dispatch(deleteTaskById(id)),
+    cancelEditTask: () => dispatch(cancelEditTask()),
   }
 }
 

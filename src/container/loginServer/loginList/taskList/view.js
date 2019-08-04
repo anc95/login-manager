@@ -5,13 +5,29 @@ import {
   Avatar,
   Row,
   Col,
-  Popconfirm
+  Popconfirm,
+  Drawer
 } from 'antd'
 import './style.scss'
 
 const Meta = Card.Meta
 
 export default class TaskList extends React.Component {
+  renderEditDrawer() {
+    const {inEditMode, editTaskInfo, cancelEditTask} = this.props
+
+    return (
+      <Drawer
+        title="Create a new account"
+        width={720}
+        onClose={cancelEditTask}
+        visible={inEditMode}
+      >
+        {JSON.stringify(editTaskInfo)}
+      </Drawer>
+    )
+  }
+
   renderDeleteIcon(taskId) {
     const {deleteTask} = this.props
 
@@ -28,6 +44,8 @@ export default class TaskList extends React.Component {
   }
 
   renderOneTask(task) {
+    const {editTask} = this.props
+
     return (
       <div className="task-wrapper">
         <Card
@@ -36,7 +54,7 @@ export default class TaskList extends React.Component {
           style={{ width: 300 }}
           actions={[
             <Icon type="play-circle" />,
-            <Icon type="edit" />,
+            <Icon type="edit" onClick={() => editTask(task)} />,
             <Icon type="copy" />,
             this.renderDeleteIcon(task.id)
           ]}
@@ -66,7 +84,10 @@ export default class TaskList extends React.Component {
 
   render() {
     return (
-      <div className="task-list-wrapper">{this.renderTaskList()}</div>
+      <div className="task-list-wrapper">
+        {this.renderTaskList()}
+        {this.renderEditDrawer()}
+      </div>
     )
   }
 }
