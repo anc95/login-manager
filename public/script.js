@@ -27,30 +27,13 @@
     return path.trim()
   }
 
-  function getTriggerEventParams(e) {
-    var params = {}
-
-    for (let key in e) {
-      if (key === 'type') {
-        break
-      }
-
-      if (['string', 'boolean'].includes(typeof e[key])) {
-        params[key] = e[key]
-      }
-    }
-
-    return params
-  }
-
   ['change', 'click'].map(eventType => {
     document.addEventListener(eventType, e => {
       ipcRenderer.sendToHost(eventType, {
         type: e.type,
         selector: getNodePath(e.srcElement),
-        eventParams: getTriggerEventParams(e),
-        eventConstructorName: e.__proto__.constructor.name
+        value: e.srcElement.value
       })
-    })
+    }, true)
   })
 })()

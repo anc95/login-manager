@@ -9,6 +9,7 @@ import {
   Drawer
 } from 'antd'
 import TaskLine from 'components/TaskLine'
+import {TaskStream} from 'utils/TaskStream'
 import {taskInfoToTaskLineAdaptor} from '../utils'
 import './style.scss'
 
@@ -59,7 +60,7 @@ export default class TaskList extends React.Component {
           hoverable={true}
           style={{ width: 300 }}
           actions={[
-            <Icon type="play-circle" />,
+            <Icon type="play-circle" onClick={() => new TaskStream(task).excute()} />,
             <Icon type="edit" onClick={() => editTask(task)} />,
             <Icon type="copy" />,
             this.renderDeleteIcon(task.id)

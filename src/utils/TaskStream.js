@@ -3,6 +3,7 @@
  * @file 事件流的基础类
  * @date Aug 3, 2019 10:06:10 AM
  */
+const puppeteer = window.require('puppeteer')
 class Task {
   constructor(
     {
@@ -10,52 +11,46 @@ class Task {
       selector,
       // 事件类型
       type,
-      // 事件参数, 模拟事件用
-      eventParams,
-      // 事件构造函数名
-      eventConstructorName
+      value
     }
   ) {
     this.selector = selector
     this.type = type
-    this.eventParams = eventParams
-    this.eventConstructorName = eventConstructorName
+    this.value = value
   }
 }
 
 export class TaskStream {
-  constructor(url) {
-    this.taskQueue = []
-    this.name = ''
+  constructor({
+    url,
+    taskQueue = [],
+    name
+  } = {}) {
+    this.taskQueue = taskQueue
+    this.name = name
     this.url = url
-  }
-
-  getEventConstuctorByName(name) {
-    const eventContainer = {
-      CompositionEvent: CompositionEvent,
-      Event: Event,
-      FocusEvent: FocusEvent,
-      InputEvent: InputEvent,
-      KeyboardEvent: KeyboardEvent,
-      MutationEvent: MutationEvent,
-      ProgressEvent: ProgressEvent,
-      UIEvent: UIEvent,
-      WheelEvent: WheelEvent
-    }
-
-    return eventContainer[name] || Event
   }
 
   push(task) {
     this.taskQueue.push(new Task(task))
   }
 
-  excute(context) {
-    const document = context.document
-
-    this.taskQueue.forEach(task => {
-      const event = new this.getEventConstuctorByName(task.eventConstructorName)(task.type, task.eventParams)
-      document.querySelector(task.selector).dispatchEvent(event)
-    })
+  async excute() {
+    const browser = await puppeteer.launch({headless: false}); // default is true
+    const page = await browser.newPage();
+    await page.goto(this.url);
+    for (let i = 0; i < this.taskQueue.length; i++) {
+      const {type, selector, value} = this.taskQueue[i]
+      await page.waitForSelector(selector)
+      switch (type) {
+        case 'click': {
+          await page.click(selector)
+          break
+        }
+        case 'change': {
+          await page.type(selector, value, {delay: -1000})
+        }
+      }
+    }
   }
 }
